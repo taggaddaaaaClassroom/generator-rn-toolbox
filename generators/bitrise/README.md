@@ -40,7 +40,7 @@ You can copy-paste them in your Bitrise app workflow editor.
 ### Add secret environment variables
 
 - You need to provide the following secret variables in order for the build to run successfuly
-  - `MATCH_PASSWORD`
+  - `MATCH_PASSWORD` (iOS only, ask a Bamer if you don't know it)
   - `GRADLE_KEYSTORE_PASSWORD` (Android only, found in the *.env* file)
   - `GRADLE_KEYSTORE_ALIAS_PASSWORD` (Android only, found in the *.env* file)
   - `FL_HOCKEY_API_TOKEN` (found in the *.env* file)
