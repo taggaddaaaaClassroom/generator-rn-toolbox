@@ -90,6 +90,11 @@ platform :ios do
     build
     if ENV['DEPLOYMENT_PLATFORM'] === 'hockeyapp' then
       deploy_hockey
+      if ENV['DEVICELAB_BOT_BASE_URL'] then
+        devicelab_bot(
+          app_name: ENV['IOS_APP_NAME'],
+        )
+      end
     else
       pilot(
         distribute_external: false,

@@ -99,10 +99,20 @@ class FastlaneEnvGenerator extends Base {
       name    : 'hockeyAppToken',
       message : 'A valid HockeyApp token',
       when: answers => answers.deploymentPlatform === 'hockeyapp',
+    }, {
+      type: 'confirm',
+      name: 'useDeviceLabBot',
+      message: 'Do you want to use the Device Lab Bot?',
+      when: answers => answers.deploymentPlatform === 'hockeyapp',
+    }, {
+      type: 'input',
+      name: 'deviceLabBotBaseUrl',
+      message: 'Base URL of your Device Lab Bot',
+      when: answers => answers.useDeviceLabBot,
     }]).then((answers) => {
       this.answers = answers;
       this.answers.lowerCaseProjectName = answers.projectName.toLowerCase();
-      // Default certificateType to appstore if platform is appstore
+
       if (this.answers.deploymentPlatform === 'appstore') {
         this.answers.certificateType = 'appstore';
       }
@@ -111,6 +121,7 @@ class FastlaneEnvGenerator extends Base {
 
   install() {
     this._createKeystore();
+    this._installDeviceLabBotPlugin();
   }
 
   writing() {
@@ -148,6 +159,12 @@ class FastlaneEnvGenerator extends Base {
       ]);
     } else {
       this.log('Keystore already exists, skipping...'.yellow);
+    }
+  }
+
+  _installDeviceLabBotPlugin() {
+    if (this.answers.useDeviceLabBot) {
+      this.spawnCommandSync('bundle exec fastlane add_plugin devicelab_bot');
     }
   }
 
